@@ -1,0 +1,20 @@
+name: usage-metering-billing-engine
+language: python
+framework: fastapi
+database: postgresql
+run: "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+seed: "python -m scripts.seed"
+test: "pytest"
+base_url: "http://localhost:8000"
+endpoints:
+  generate: "POST /api/v1/generate"
+  usage: "GET /api/v1/usage"
+  checkout: "POST /api/v1/billing/checkout-session"
+  stripe_webhook: "POST /api/v1/webhooks/stripe"
+plans:
+  free:
+    api_calls_quota: 1000
+    token_quota: 100000
+  pro:
+    api_calls_quota: 50000
+    token_quota: 5000000
